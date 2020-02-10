@@ -27,7 +27,7 @@ namespace IconsGenerator
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 //openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "icon files (*.ico)|*.ico|All files (*.*)|*.*";
+                openFileDialog.Filter = "PNG files (*png)|*.png|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
                 openFileDialog.Multiselect = false;
@@ -45,18 +45,111 @@ namespace IconsGenerator
                     {
                         fileContent = reader.ReadToEnd();
                     }
+                    
+                    try
+                    {
+
+                        Image img;
+                        img = Image.FromFile(filePath);
+                        if (img.Width != img.Height)
+                        {
+                            MessageBox.Show("Image should be square");
+                            return;
+                        }
+
+                        if (img.Width != 1024)
+                        {
+                            MessageBox.Show("Image should be 1024x1024");
+                            return;
+                        }
+
+                        lblIconsPath.Text = filePath;
+                        lblGenIconsPath.Text = filePath.Replace(fileName, "");
+                        pictureBoxIcon.Image = img;
+                        btnGenerate.Enabled = true;
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show(error.Message);
+                        //throw;
+                    }
                 }
             }
-            lblIconsPath.Text = filePath;
-            lblGenIconsPath.Text = filePath.Replace(fileName,"");
-            //pictureBoxIcon.Image = Bitmap.FromHicon(new Icon(filePath, new Size(380, 380)).Handle);
+            
 
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+            string newPath = lblGenIconsPath.Text;
+            createFolder("AppIcons", newPath);
+            newPath = lblGenIconsPath.Text + "AppIcons\\";
+
+
+            if (checkBoxiPhone.Checked || checkBoxiPad.Checked || checkBoxMac.Checked || checkBoxWatch.Checked)
+            {
+                //create appstore.png file and...
+                createFolder("Assets.xcassets", newPath);
+                newPath += "Assets.xcassets\\";
+                createFolder("AppIcon.appiconset", newPath);
+            }
+
+            if (checkBoxiPhone.Checked)
+            {
+            }
+
+            if (checkBoxiPad.Checked)
+            {
+            }
+
+            if (checkBoxMac.Checked)
+            {
+            }
+
+            if (checkBoxWatch.Checked)
+            {
+            }
+
+            
+
+            if (checkBoxAndroid.Checked)
+            {
+                newPath = lblGenIconsPath.Text + "AppIcons\\";
+
+                createFolder("android", newPath);
+                newPath += "android\\";
+
+                createFolder("mipmap-hdpi", newPath);
+                createFolder("mipmap-mdpi", newPath);
+                createFolder("mipmap-xhdpi", newPath);
+                createFolder("mipmap-xxhdpi", newPath);
+                createFolder("mipmap-xxxhdpi", newPath);
+
+                //create playstore.png file
+
+            }
+
+
 
         }
+
+        void createFolder (string name, string path)
+        {
+            DirectoryInfo di = Directory.CreateDirectory(path + name);
+        }
+
+        //Image resizeImage (int size)
+        //{
+        //    Image img;
+        //    return img;
+        //}
+
+        //Image convertToPNG (Image inputImage)
+        //{
+        //    Image img;
+        //    return img;
+        //}
+
 
     }
 }

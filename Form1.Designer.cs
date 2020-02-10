@@ -57,6 +57,7 @@
             // btnGenerate
             // 
             this.btnGenerate.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnGenerate.Enabled = false;
             this.btnGenerate.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnGenerate.Location = new System.Drawing.Point(12, 490);
             this.btnGenerate.Name = "btnGenerate";
@@ -127,9 +128,12 @@
             // 
             // pictureBoxIcon
             // 
+            this.pictureBoxIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBoxIcon.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBoxIcon.Location = new System.Drawing.Point(253, 93);
             this.pictureBoxIcon.Name = "pictureBoxIcon";
             this.pictureBoxIcon.Size = new System.Drawing.Size(380, 380);
+            this.pictureBoxIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxIcon.TabIndex = 8;
             this.pictureBoxIcon.TabStop = false;
             // 
